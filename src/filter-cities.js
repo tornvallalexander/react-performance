@@ -16,3 +16,16 @@ export function getItems(filter) {
     keys: ['name'],
   })
 }
+
+export function promisifiedGetItems(filter) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (!filter) {
+        resolve(allItems)
+      }
+      resolve(matchSorter(allItems, filter, {
+        keys: ['name'],
+      }))
+    }, 0)
+  })
+}
