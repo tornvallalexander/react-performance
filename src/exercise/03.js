@@ -21,8 +21,8 @@ function Menu({
           getItemProps={getItemProps}
           item={item}
           index={index}
-          selectedItem={selectedItem}
-          highlightedIndex={highlightedIndex}
+          isSelected={selectedItem?.id === item.id}
+          isHighlighted={highlightedIndex === index}
         >
           {item.name}
         </ListItem>
@@ -32,16 +32,16 @@ function Menu({
 }
 Menu = React.memo(Menu)
 
+// if you can, do calculations higher in the tree,
+// especially if you're mapping over a large array
 function ListItem({
   getItemProps,
   item,
   index,
-  selectedItem,
-  highlightedIndex,
+  isSelected,
+  isHighlighted,
   ...props
 }) {
-  const isSelected = selectedItem?.id === item.id
-  const isHighlighted = highlightedIndex === index
   return (
     <li
       {...getItemProps({
@@ -56,7 +56,8 @@ function ListItem({
     />
   )
 }
-ListItem = React.memo(ListItem)
+// with custom comparator
+ListItem = React.memo(ListItem);
 
 function App() {
   const forceRerender = useForceRerender()
